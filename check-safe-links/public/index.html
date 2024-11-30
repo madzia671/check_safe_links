@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bezpieczne Linki</title>
+</head>
+<body>
+    <h1>Sprawdź link</h1>
+    <form id="link-form">
+        <input type="text" id="link-input" placeholder="Wpisz link" required>
+        <button type="submit">Sprawdź</button>
+    </form>
+    <p id="response"></p>
+
+    <script>
+        const form = document.getElementById('link-form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const link = document.getElementById('link-input').value;
+
+            // Wysyłanie zapytania do backendu (do funkcji w Vercel)
+            const res = await fetch(`/api/check-link?link=${encodeURIComponent(link)}`);
+            const data = await res.json();
+
+            // Wyświetlenie odpowiedzi na stronie
+            document.getElementById('response').textContent = data.message;
+        });
+    </script>
+</body>
+</html>
